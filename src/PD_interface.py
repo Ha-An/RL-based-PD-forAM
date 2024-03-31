@@ -50,9 +50,8 @@ class Utility():
 
     def create_obj(self, sliced_meshes_lst):
         # obj형식을 stl형식의 리스트로 변형
-
         obj = {}
-
+        print(sliced_meshes_lst)
         for x in range(len(sliced_meshes_lst)):  # Parts별 obj생성
             # Tweaker obj 기본 자료구조
             obj[x] = {'mesh': [], 'name': ['binary file']}
@@ -100,7 +99,7 @@ class Utility():
             mesh = objs[part]["mesh"]
             mesh = self.rotate_bin_stl(self.info[part]["matrix"], mesh)
             meshes[part] = mesh
-        return meshes, sup_vol
+        return self.create_trimesh(meshes), sup_vol
 
     def rotate_bin_stl(self, rotation_matrix, content):
         mesh = np.array(content, dtype=np.float64)

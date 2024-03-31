@@ -39,7 +39,6 @@ def create_env():
     print("support_volume: ", support_volume)
     '''
 
-
     # processor.pyvista_visualize(processor.mesh)
     # Create a PD tree
     PD_tree = {1: {"Vol": part_volume, "BB-X": bounding_box[0], "BB-Y": bounding_box[1], "BB-Z": bounding_box[2],
