@@ -13,7 +13,7 @@ env = GymInterface()
 import shutil
 
 def delete_files_in_directory(directory):
-    """디렉토리 내의 모든 파일을 삭제합니다."""
+    
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
         try:
@@ -22,13 +22,11 @@ def delete_files_in_directory(directory):
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)
         except Exception as e:
-            print(f"파일 삭제 중 오류 발생: {e}")
+            print(f"error: {e}")
 
-# 결과 디렉토리와 로그 디렉토리를 지정합니다.
 RESULTS_DIR = "../results"
 LOGS_DIR = "../logs"
 
-# 결과 디렉토리와 로그 디렉토리 내의 파일을 삭제합니다.
 delete_files_in_directory(RESULTS_DIR)
 delete_files_in_directory(LOGS_DIR)
 
