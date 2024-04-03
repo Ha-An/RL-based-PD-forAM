@@ -9,7 +9,7 @@ from torch.utils.tensorboard import SummaryWriter
 class GymInterface(gym.Env):
     def __init__(self):
         if TRAIN:
-            self.writer = SummaryWriter(log_dir="logs/")
+            self.writer = SummaryWriter(log_dir="../logs/") 
         super(GymInterface, self).__init__()
         # Initialize the PD environment
         self.PD_tree, self.decomposed_parts = env.create_env()
@@ -24,12 +24,14 @@ class GymInterface(gym.Env):
 
         self.Advantage = self.PD_tree[1]["SupVol"]
         # Define Vector Limits
+        print(self.PD_tree[1]["Mesh"])
         self.x = self.PD_tree[1]["Mesh"].vertices[:, 0]
         self.y = self.PD_tree[1]["Mesh"].vertices[:, 1]
         self.z = self.PD_tree[1]["Mesh"].vertices[:, 2]
 
         # # Define action space
         self.define_action_space()
+    
 
     # Update action_space at every step
     def define_action_space(self):
