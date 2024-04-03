@@ -3,16 +3,11 @@ from config import *
 import numpy as np
 import time
 import os
+import shutil
 from stable_baselines3 import PPO  # DDPG
 
-# Create environment
-env = GymInterface()
-# env.clean_up_logs() ###
-# result_folder = "../results"###
-# Define a function to evaluate a trained model
-import shutil
-
-def delete_files_in_directory(directory):
+# Delete existing logs that remain in the folder before code execution
+def clear_previous_results(directory):
     
     for filename in os.listdir(directory):
         file_path = os.path.join(directory, filename)
@@ -20,16 +15,17 @@ def delete_files_in_directory(directory):
             if os.path.isfile(file_path):
                 os.unlink(file_path)
             elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
+                shutil.rmtree(file_path)              
+        except Exception as e: # For indelible files, print an error message and run the following code  
             print(f"error: {e}")
 
-RESULTS_DIR = "../results"
-LOGS_DIR = "../logs"
+clear_previous_results(LOGS_DIR)
+clear_previous_results(RESULTS_DIR)
 
-delete_files_in_directory(RESULTS_DIR)
-delete_files_in_directory(LOGS_DIR)
+# Create environment
+env = GymInterface()
 
+# Define a function to evaluate a trained model
 def evaluate_model(model, env, num_episodes, result_folder):
     #    env = GymInterface()
     all_rewards = []
@@ -48,7 +44,7 @@ def evaluate_model(model, env, num_episodes, result_folder):
 
     for x in range(len(env.decomposed_parts)):
         mesh = env.PD_tree[env.decomposed_parts[x]]["Mesh"]
-        mesh.export(os.path.join(result_folder, f"{env.decomposed_parts[x]}.stl")) ###
+        mesh.export(os.path.join(result_folder, f"{env.decomposed_parts[x]}.stl"))
     return mean_reward, std_reward
 
 

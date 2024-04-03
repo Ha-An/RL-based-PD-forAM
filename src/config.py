@@ -1,8 +1,8 @@
 import os
 
 
-N_EPISODES = 1 # Training iterations, Set to at least 2048 times
-N_EVAL_EPISODES = 2 # Testing iterations
+N_EPISODES = 1000 # Training iterations, Set to at least 2048 times
+N_EVAL_EPISODES = 1 # Testing iterations
 MAX_N_PARTS = 5 # Minimum number of pieces to stop performing
 
 TRAIN = True
@@ -32,7 +32,9 @@ MESH_PATH = os.path.join(PARENT_DIR, IMPORT_DIR, INPUT_MODEL)
 EXPORT_DIR = os.path.join(PARENT_DIR, EXPORT_DIR)
 
 result_folder = os.path.join('../results', 'experiment1')
-log_dir = "./logs" ###
+
+RESULTS_DIR = "../results"
+LOGS_DIR = "../logs"
 
 # TensorBoard 실행:
 # tensorboard --logdir="C:/tensorboard_logs/"

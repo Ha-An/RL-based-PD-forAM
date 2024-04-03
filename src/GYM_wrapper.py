@@ -1,6 +1,4 @@
 import gym
-import os ###
-import shutil ###
 from gym import spaces
 import numpy as np
 from config import *
@@ -11,7 +9,7 @@ from torch.utils.tensorboard import SummaryWriter
 class GymInterface(gym.Env):
     def __init__(self):
         if TRAIN:
-            self.writer = SummaryWriter(log_dir="../logs/") ###
+            self.writer = SummaryWriter(log_dir="../logs/") 
         super(GymInterface, self).__init__()
         # Initialize the PD environment
         self.PD_tree, self.decomposed_parts = env.create_env()
@@ -34,9 +32,6 @@ class GymInterface(gym.Env):
         # # Define action space
         self.define_action_space()
     
-    #def clean_up_logs(self): ###
-     #   if os.path.exists(log_dir):
-      #      shutil.rmtree(log_dir)
 
     # Update action_space at every step
     def define_action_space(self):
