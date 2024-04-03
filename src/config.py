@@ -1,7 +1,7 @@
 import os
 
 
-N_EPISODES = 1000 # Training iterations, Set to at least 2048 times
+N_EPISODES = 2048 # Training iterations, Set to at least 2048 times
 N_EVAL_EPISODES = 1 # Testing iterations
 MAX_N_PARTS = 5 # Minimum number of pieces to stop performing
 
