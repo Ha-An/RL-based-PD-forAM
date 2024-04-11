@@ -115,25 +115,25 @@ class GymInterface(gym.Env):
         PD_tree, decomposed_parts, reward = env.decompose_parts(
             action, self.decomposed_parts, self.PD_tree)
 
-        if len(decomposed_parts) > MAX_N_PARTS*2:
-            obs, reward, done, _ = env.step(action)
-            return obs, reward, done, _
-        else:
-            self.PD_tree, self.decomposed_parts = PD_tree, decomposed_parts
+        #if len(decomposed_parts) > MAX_N_PARTS*2:
+            #obs, reward, done, _ = env.step(action)
+            #return obs, reward, done, _
+        #else:
+        self.PD_tree, self.decomposed_parts = PD_tree, decomposed_parts
             # Update Action Space
-            self.define_action_space()
+        self.define_action_space()
 
             # Capture the next state of the environment
-            self.update_state()
+        self.update_state()
 
             # Conditions for ending one episode
-            if MAX_N_PARTS < len(self.decomposed_parts) or reward == 0: 
+        if MAX_N_PARTS < len(self.decomposed_parts) or reward == 0: 
                 done = True
 
             # Calculate the reward
-            reward = -reward
-            self.total_reward = -reward
-            if done == True:
+        reward = -reward
+        self.total_reward += reward
+        if done == True:
                 if TRAIN:
                     self.writer.add_scalar(
                         "reward", reward, global_step=self.num_episode)
