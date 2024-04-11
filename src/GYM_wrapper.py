@@ -16,22 +16,20 @@ class GymInterface(gym.Env):
         self.total_reward_over_episode = []
         self.total_reward = 0
         self.num_episode = 1
-
         # Define observation space:
         self.observation_space = spaces.Box(
             low=-np.inf, high=np.inf, shape=(MAX_N_PARTS*2, 6))
         self.update_state()
-
+        
         self.Advantage = self.PD_tree[1]["SupVol"]
         # Define Vector Limits
         print(self.PD_tree[1]["Mesh"])
-        self.x = self.PD_tree[1]["Mesh"].vertices[:, 0]
+        self.x = self.PD_tree[1]["Mesh"].vertices[:, 0] #mesh[0]
         self.y = self.PD_tree[1]["Mesh"].vertices[:, 1]
         self.z = self.PD_tree[1]["Mesh"].vertices[:, 2]
 
         # # Define action space
         self.define_action_space()
-    
 
     # Update action_space at every step
     def define_action_space(self):
@@ -39,9 +37,9 @@ class GymInterface(gym.Env):
         # Update Action Space Low Values
         self.action_space_low = np.concatenate([
             [0],
-            [np.min(self.x, axis=0)],
-            [np.min(self.y, axis=0)],
-            [np.min(self.z, axis=0)],
+            #[np.min(self.x, axis=0)],
+            #[np.min(self.y, axis=0)],
+            #[np.min(self.z, axis=0)],
             [np.min(self.x, axis=0)],
             [np.min(self.y, axis=0)],
             [np.min(self.z, axis=0)],
@@ -49,10 +47,10 @@ class GymInterface(gym.Env):
 
         # Update Action Space High Values
         self.action_space_high = np.concatenate([
-            [len(self.decomposed_parts)-1],
-            [np.max(self.x, axis=0)],
-            [np.max(self.y, axis=0)],
-            [np.max(self.z, axis=0)],
+            [len(self.decomposed_parts)-1], 
+            #[np.min(self.x, axis=0)],
+            #[np.min(self.y, axis=0)],
+            #[np.min(self.z, axis=0)],
             [np.max(self.x, axis=0)],
             [np.max(self.y, axis=0)],
             [np.max(self.z, axis=0)],
@@ -60,7 +58,7 @@ class GymInterface(gym.Env):
 
         # Update Action Space
         self.action_space = spaces.Box(
-            low=self.action_space_low, high=self.action_space_high, shape=(7,), dtype=np.float32)
+            low=self.action_space_low, high=self.action_space_high, shape=(4,), dtype=np.float32)
 
     # Update State
     def update_state(self):
@@ -129,7 +127,7 @@ class GymInterface(gym.Env):
             self.update_state()
 
             # Conditions for ending one episode
-            if MAX_N_PARTS < len(self.decomposed_parts) or reward == 0:
+            if MAX_N_PARTS < len(self.decomposed_parts) or reward == 0: 
                 done = True
 
             # Calculate the reward
@@ -147,6 +145,9 @@ class GymInterface(gym.Env):
         info = {}  # 추가 정보 (필요에 따라 사용)
 
         return self.current_observation, reward, done, info
+    
+
+
 
     def render(self, mode='human'):
         pass

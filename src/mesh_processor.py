@@ -11,13 +11,13 @@ class MeshProcessor:
     def reverse_plane_normal(self, plane_normal):
         return [-x for x in plane_normal]
 
-    def trimesh_cut(self, mesh, plane_point, plane_normal):
+    def trimesh_cut(self, mesh, plane_normal):
         reverse_plane = self.reverse_plane_normal(plane_normal)
 
         sliced_mesh_one = mesh.slice_plane(
-            plane_origin=plane_point, plane_normal=plane_normal, cap=True)
+            plane_origin=[0,0,0], plane_normal=plane_normal, cap=True)
         sliced_mesh_theother = mesh.slice_plane(
-            plane_origin=plane_point, plane_normal=reverse_plane, cap=True)
+            plane_origin=[0,0,0], plane_normal=reverse_plane, cap=True)
 
         meshes_one = sliced_mesh_one.split()
         meshes_theother = sliced_mesh_theother.split()
