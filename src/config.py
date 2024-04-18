@@ -1,7 +1,7 @@
 import os
 
 
-N_EPISODES = 2048 # Training iterations, Set to at least 2048 times
+N_EPISODES = 10 # Training iterations, Set to at least 2048 times
 N_EVAL_EPISODES = 1 # Testing iterations
 MAX_N_PARTS = 5 # Minimum number of pieces to stop performing
 
@@ -36,6 +36,8 @@ result_folder = os.path.join('../results', 'experiment1')
 RESULTS_DIR = "../results"
 LOGS_DIR = "../logs"
 
+COST_REMOVE_SUP = 1
+COST_ASSEMBLE = 1
 # TensorBoard 실행:
 # tensorboard --logdir="C:/tensorboard_logs/"
 # http://localhost:6006/
