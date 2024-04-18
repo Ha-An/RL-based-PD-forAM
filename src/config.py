@@ -1,7 +1,7 @@
 import os
 
 
-N_EPISODES = 10 # Training iterations, Set to at least 2048 times
+N_EPISODES = 2048 # Training iterations, Set to at least 2048 times
 N_EVAL_EPISODES = 1 # Testing iterations
 MAX_N_PARTS = 5 # Minimum number of pieces to stop performing
 
@@ -32,6 +32,7 @@ MESH_PATH = os.path.join(PARENT_DIR, IMPORT_DIR, INPUT_MODEL)
 EXPORT_DIR = os.path.join(PARENT_DIR, EXPORT_DIR)
 
 result_folder = os.path.join('../results', 'experiment1')
+test_folder = os.path.join('../test')
 
 RESULTS_DIR = "../results"
 LOGS_DIR = "../logs"

@@ -37,9 +37,6 @@ class GymInterface(gym.Env):
         # Update Action Space Low Values
         self.action_space_low = np.concatenate([
             [0],
-            #[np.min(self.x, axis=0)],
-            #[np.min(self.y, axis=0)],
-            #[np.min(self.z, axis=0)],
             [np.min(self.x, axis=0)],
             [np.min(self.y, axis=0)],
             [np.min(self.z, axis=0)],
@@ -48,9 +45,6 @@ class GymInterface(gym.Env):
         # Update Action Space High Values
         self.action_space_high = np.concatenate([
             [len(self.decomposed_parts)-1], 
-            #[np.min(self.x, axis=0)],
-            #[np.min(self.y, axis=0)],
-            #[np.min(self.z, axis=0)],
             [np.max(self.x, axis=0)],
             [np.max(self.y, axis=0)],
             [np.max(self.z, axis=0)],
@@ -120,27 +114,27 @@ class GymInterface(gym.Env):
             #return obs, reward, done, _
         #else:
         self.PD_tree, self.decomposed_parts = PD_tree, decomposed_parts
-            # Update Action Space
+        # Update Action Space
         self.define_action_space()
 
-            # Capture the next state of the environment
+        # Capture the next state of the environment
         self.update_state()
 
-            # Conditions for ending one episode
+        # Conditions for ending one episode
         if MAX_N_PARTS < len(self.decomposed_parts) or reward == 0: 
                 done = True
 
-            # Calculate the reward
-        reward = -reward
-        self.total_reward += reward
+        # Calculate the reward
         if done == True:
-                if TRAIN:
-                    self.writer.add_scalar(
-                        "reward", reward, global_step=self.num_episode)
-                print("Total reward: ", self.total_reward)
-                self.total_reward_over_episode.append(self.total_reward)
-                self.total_reward = 0
-                self.num_episode += 1
+            if TRAIN:
+                reward = reward*COST_REMOVE_SUP + len(self.decomposed_parts)*COST_ASSEMBLE
+                self.total_reward += reward
+                self.writer.add_scalar(
+                    "reward", reward, global_step=self.num_episode)
+            print("Total reward: ", self.total_reward)
+            self.total_reward_over_episode.append(self.total_reward)
+            self.total_reward = 0
+            self.num_episode += 1
 
         info = {}  # 추가 정보 (필요에 따라 사용)
 
