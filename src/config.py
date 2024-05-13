@@ -20,7 +20,7 @@ ACTION_SPACE_CUT_PLANE_ANGLE_HIGH = 180  # unit: degree
 
 
 # Set the initial model and import&export directory names
-INPUT_MODEL = 'StanfordBunny.stl'
+INPUT_MODEL = 'Cube200.stl'
 IMPORT_DIR = 'models'
 EXPORT_DIR = 'results'
 ### LOG_DIR = 'logs' ###
@@ -31,7 +31,7 @@ PARENT_DIR = os.path.dirname(CURRENT_DIR)
 MESH_PATH = os.path.join(PARENT_DIR, IMPORT_DIR, INPUT_MODEL)
 EXPORT_DIR = os.path.join(PARENT_DIR, EXPORT_DIR)
 
-result_folder = os.path.join('../results', 'experiment1')
+result_folder = os.path.join('../results')
 test_folder = os.path.join('../test')
 
 RESULTS_DIR = "../results"

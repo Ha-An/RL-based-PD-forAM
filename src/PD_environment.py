@@ -96,16 +96,16 @@ def decompose_parts(ACTION, part_list, PD_tree):
             part_list.append(PartID)
         part_list.remove(Part)
   
-    reward=0
+    total_supvol=0
     for part in part_list:
-        reward=reward+PD_tree[part]["SupVol"]
+        total_supvol=total_supvol+PD_tree[part]["SupVol"]
         print(f"{part}:{PD_tree[part]["SupVol"]}")
 
     print("=================")
-    print("Sum of SupVol:",reward)
+    print("Sum of SupVol:",total_supvol)
     print("=================")
 
-    return PD_tree, part_list, reward
+    return PD_tree, part_list, total_supvol
 
 
 def cal_reward(min_volume_of_surrport_struct):

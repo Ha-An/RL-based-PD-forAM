@@ -106,7 +106,7 @@ class GymInterface(gym.Env):
         done = False  # Stop Learing Variable
 
         # Take an action
-        PD_tree, decomposed_parts, reward = env.decompose_parts(
+        PD_tree, decomposed_parts, total_supvol = env.decompose_parts(
             action, self.decomposed_parts, self.PD_tree)
 
         #if len(decomposed_parts) > MAX_N_PARTS*2:
@@ -121,13 +121,14 @@ class GymInterface(gym.Env):
         self.update_state()
 
         # Conditions for ending one episode
-        if MAX_N_PARTS < len(self.decomposed_parts) or reward == 0: 
-                done = True
+        if MAX_N_PARTS < len(self.decomposed_parts) or total_supvol == 0: 
+            done = True
 
         # Calculate the reward
         if done == True:
             if TRAIN:
-                reward = reward*COST_REMOVE_SUP + len(self.decomposed_parts)*COST_ASSEMBLE
+                reward = total_supvol*COST_REMOVE_SUP + (len(self.decomposed_parts)-1)*COST_ASSEMBLE
+                print("supvol:",total_supvol,"parts_n:", len(self.decomposed_parts))
                 self.total_reward += reward
                 self.writer.add_scalar(
                     "reward", reward, global_step=self.num_episode)
@@ -138,7 +139,7 @@ class GymInterface(gym.Env):
 
         info = {}  # 추가 정보 (필요에 따라 사용)
 
-        return self.current_observation, reward, done, info
+        return self.current_observation, total_supvol, done, info
     
 
 
