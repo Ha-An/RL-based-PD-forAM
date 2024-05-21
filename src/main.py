@@ -27,7 +27,6 @@ env = GymInterface()
 
 # Define a function to evaluate a trained model
 def evaluate_model(model, env, num_episodes, result_folder):
-    #    env = GymInterface()
     all_rewards = []
     for _ in range(num_episodes):
         obs = env.reset()

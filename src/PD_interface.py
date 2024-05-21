@@ -17,7 +17,6 @@ class Utility():
         self.result = True
         self.Root = self.curpath + os.sep + self.file_name+'.'+self.file_type
         self.outputfile = self.curpath + os.sep + self.file_name + "_tweaked"+'.stl'
-
     # trimesh's bounds를 (xMin, xMax, yMin, yMax, zMin, zMax)로 변형
     def align_bounds(self, bounds):
         temp = []
@@ -31,7 +30,7 @@ class Utility():
 
     # Create_Trimesh
     def create_trimesh(self, obj):
-
+        file_counter=1
         meshes = []
         for x in range(len(obj.keys())):
 
@@ -44,7 +43,11 @@ class Utility():
 
             # Trimesh 객체 생성
             mesh = trimesh.Trimesh(vertices=vertices, faces=faces)
+            mesh = self.cal_center_of_mass(mesh)
+            mesh.export(os.path.join(test_folder, f"{file_counter}test.stl")) 
+            file_counter += 1
             meshes.append(mesh)
+        
 
         return meshes
 
@@ -110,4 +113,19 @@ class Utility():
         mesh = np.matmul(mesh, rotation_matrix)
         mesh = mesh.reshape(len(content), 3)
 
+        return mesh
+    
+    def cal_center_of_mass(self,mesh):
+        # Get the vertices from PD_tree
+        vertices = mesh.vertices
+
+        # Calculate the center of mass
+        total_x = np.sum(vertices[:, 0])
+        total_y = np.sum(vertices[:, 1])
+        total_z = np.sum(vertices[:, 2])
+        num_vertices = len(vertices)
+        center_of_mass = np.array([total_x / num_vertices, total_y / num_vertices, total_z / num_vertices])
+        mesh.vertices=mesh.vertices-center_of_mass
+        # Store the result as a member variable
+        #PD_tree.center_of_mass = center_of_mass
         return mesh

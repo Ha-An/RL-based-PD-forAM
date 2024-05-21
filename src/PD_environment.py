@@ -29,7 +29,6 @@ def create_env():
     mesh = [processor.mesh]
     
     part_volume, concavity, bounding_box, sup_vol, mesh = extract_features(mesh[0])
-    #mesh, sup_vol = Utility.orientation(Utility.create_obj(mesh))
     '''
     print("Initial model ==== ")
     print("Validation (Watertight): ", processor.mesh.is_watertight)
@@ -73,12 +72,9 @@ def decompose_parts(ACTION, part_list, PD_tree):
 
     # ACTION[0] : PART ID of the part to be decomposed
     # ACTION[1] : CUTTING PLANE COORDINATE & ANGLE 
-    start_point = [ACTION[1],ACTION[2],ACTION[3]]
-    plain_normal=[ACTION[4],ACTION[5],ACTION[6]]
+    plain_normal = [ACTION[1],ACTION[2],ACTION[3]]
     
-    meshes = MeshProcessor.trimesh_cut(PD_tree[Part]['Mesh'],start_point, plain_normal)
-
-    #mesh,sup_vol=deter_build_orientation(meshes)
+    meshes = MeshProcessor.trimesh_cut(PD_tree[Part]['Mesh'], plain_normal)
 
  
     if len(meshes) > 0 :
@@ -100,16 +96,16 @@ def decompose_parts(ACTION, part_list, PD_tree):
             part_list.append(PartID)
         part_list.remove(Part)
   
-    reward=0
+    total_supvol=0
     for part in part_list:
-        reward=reward+PD_tree[part]["SupVol"]
+        total_supvol=total_supvol+PD_tree[part]["SupVol"]
         print(f"{part}:{PD_tree[part]["SupVol"]}")
 
     print("=================")
-    print("Sum of SupVol:",reward)
+    print("Sum of SupVol:",total_supvol)
     print("=================")
 
-    return PD_tree, part_list,reward
+    return PD_tree, part_list, total_supvol
 
 
 def cal_reward(min_volume_of_surrport_struct):
