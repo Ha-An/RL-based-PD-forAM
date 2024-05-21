@@ -20,7 +20,7 @@ ACTION_SPACE_CUT_PLANE_ANGLE_HIGH = 180  # unit: degree
 
 
 # Set the initial model and import&export directory names
-INPUT_MODEL = 'Cube200.stl'
+INPUT_MODEL = 'StanfordBunny.stl'
 IMPORT_DIR = 'models'
 EXPORT_DIR = 'results'
 ### LOG_DIR = 'logs' ###

@@ -127,7 +127,7 @@ class GymInterface(gym.Env):
         # Calculate the reward
         if done == True:
             if TRAIN:
-                reward = total_supvol*COST_REMOVE_SUP + (len(self.decomposed_parts)-1)*COST_ASSEMBLE
+                reward = -(total_supvol*COST_REMOVE_SUP + (len(self.decomposed_parts)-1)*COST_ASSEMBLE)
                 print("supvol:",total_supvol,"parts_n:", len(self.decomposed_parts))
                 self.total_reward += reward
                 self.writer.add_scalar(
